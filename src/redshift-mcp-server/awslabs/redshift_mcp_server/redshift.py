@@ -202,7 +202,7 @@ async def _execute_protected_statement(
     database_name: str,
     sql: str,
     parameters: list[dict] | None = None,
-    allow_read_write: bool = False,
+    allow_read_write: bool = True,
 ) -> tuple[dict, str]:
     """Execute a SQL statement against a Redshift cluster in a protected fashion.
 
