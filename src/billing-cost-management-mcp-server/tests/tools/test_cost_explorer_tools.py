@@ -735,10 +735,9 @@ async def test_cost_explorer_main_function():
         'Tools for working with AWS Cost Explorer API' in instructions if instructions else False
     ), 'Server instructions should mention AWS Cost Explorer API'
 
-    # Check that the cost_explorer tool was imported correctly
-    assert hasattr(ce_tool, 'name'), 'The imported cost_explorer tool should have a name attribute'
-    assert ce_tool.name == 'cost-explorer', (
-        'The imported cost_explorer tool should have the right name'
+    # Check that the cost_explorer tool is registered on the server under the expected name
+    assert await cost_explorer_server.get_tool('cost-explorer') is not None, (
+        "cost-explorer tool should be registered on the server"
     )
 
     # Check server has expected methods and properties
