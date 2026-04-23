@@ -784,9 +784,6 @@ def main():
     if args.debug:
         # Enable more detailed error tracking and performance monitoring
         logger.debug('Enabling detailed performance tracking and error monitoring')
-        # Hook into FastMCP to track performance
-        mcp.settings.debug = True
-        # You could add more diagnostics setup here
 
     logger.debug('Starting awslabs_support_mcp_server MCP server')
 

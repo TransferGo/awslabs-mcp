@@ -15,7 +15,7 @@
 import os
 import sys
 from fastmcp import FastMCP
-from fastmcp.server.proxy import ProxyClient
+from fastmcp.server.providers.proxy import ProxyClient
 from fastmcp.tools import Tool
 from loguru import logger
 from typing import Any, Callable, Dict, Optional

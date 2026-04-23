@@ -43,7 +43,7 @@ async def test_server():
 
     # Test getting tools
     try:
-        tools = await mcp.get_tools()
+        tools = await mcp.list_tools()
         print(f'\nAvailable tools ({len(tools)}):')
 
         tool_names = []
@@ -77,13 +77,10 @@ async def test_server():
 
 async def call_mcp_tool(tool_name: str, file_path: str, file_type: str = None):
     """Helper function to call MCP tools through the server."""
-    # Get the tool from the server
-    tools = await mcp.get_tools()
-
-    if tool_name not in tools:
-        raise ValueError(f'Tool {tool_name} not found. Available tools: {list(tools.keys())}')
-
-    tool = tools[tool_name]
+    try:
+        tool = await mcp.get_tool(tool_name)
+    except Exception as e:
+        raise ValueError(f'Tool {tool_name} not found: {e}')
 
     # Call the tool function using the 'fn' attribute with Context
     if hasattr(tool, 'fn') and callable(getattr(tool, 'fn')):
@@ -904,12 +901,11 @@ async def call_mcp_tool_slides(
     file_path: str, output_dir: str, dpi: int = 200, timeout: int = 120
 ):
     """Helper function to call extract_slides_as_images MCP tool."""
-    tools = await mcp.get_tools()
+    try:
+        tool = await mcp.get_tool('extract_slides_as_images')
+    except Exception as e:
+        raise ValueError(f'Tool extract_slides_as_images not found: {e}')
 
-    if 'extract_slides_as_images' not in tools:
-        raise ValueError('Tool extract_slides_as_images not found')
-
-    tool = tools['extract_slides_as_images']
     if hasattr(tool, 'fn') and callable(getattr(tool, 'fn')):
         fn = getattr(tool, 'fn')
         ctx = MockContext()

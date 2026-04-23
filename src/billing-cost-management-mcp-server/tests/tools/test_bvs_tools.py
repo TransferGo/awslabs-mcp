@@ -19,6 +19,7 @@ including retrieving billing view metadata, listing billing views, listing sourc
 and retrieving resource-based policies.
 """
 
+import asyncio
 import fastmcp
 import importlib
 import pytest
@@ -92,26 +93,22 @@ def test_bvs_server_initialization():
 
 def test_get_billing_view_tool_registered():
     """Test that the get_billing_view tool is registered with proper name."""
-    assert hasattr(get_billing_view_tool, 'name')
-    assert get_billing_view_tool.name == 'get-billing-view'
+    assert asyncio.run(bvs_server.get_tool('get-billing-view')) is not None
 
 
 def test_list_billing_views_tool_registered():
     """Test that the list_billing_views tool is registered with proper name."""
-    assert hasattr(list_billing_views_tool, 'name')
-    assert list_billing_views_tool.name == 'list-billing-views'
+    assert asyncio.run(bvs_server.get_tool('list-billing-views')) is not None
 
 
 def test_list_source_views_for_billing_view_tool_registered():
     """Test that the list_source_views_for_billing_view tool is registered with proper name."""
-    assert hasattr(list_source_views_for_billing_view_tool, 'name')
-    assert list_source_views_for_billing_view_tool.name == 'list-source-views-for-billing-view'
+    assert asyncio.run(bvs_server.get_tool('list-source-views-for-billing-view')) is not None
 
 
 def test_get_resource_policy_tool_registered():
     """Test that the get_resource_policy tool is registered with proper name."""
-    assert hasattr(get_resource_policy_tool, 'name')
-    assert get_resource_policy_tool.name == 'get-resource-policy'
+    assert asyncio.run(bvs_server.get_tool('get-resource-policy')) is not None
 
 
 @pytest.mark.asyncio
